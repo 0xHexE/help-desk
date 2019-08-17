@@ -1,16 +1,131 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions_0vw2n9u" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.2.3">
-  <bpmn:process id="Process_1dy5dyx" isExecutable="true">
-    <bpmn:startEvent id="StartEvent_1" />
-    <bpmn:endEvent id="EndEvent_0ylzhm4" />
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_0grhi6v" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.2.1">
+  <bpmn:process id="IssueLifeCycle" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1" name="Issue Created">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="IssueTitle" label="Title" type="string">
+            <camunda:validation>
+              <camunda:constraint name="required" />
+              <camunda:constraint name="maxlength" config="255" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="IssueDescription" label="Description" type="string" />
+          <camunda:formField id="IssueAssignee" label="Assignee" type="string">
+            <camunda:validation>
+              <camunda:constraint name="validator" config="com.f4erp.help_desk.utils.validators.UUIDValidator" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="IssueBoard" label="Board" type="string">
+            <camunda:validation>
+              <camunda:constraint name="required" />
+              <camunda:constraint name="validator" config="com.f4erp.help_desk.utils.validators.UUIDValidator" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="IssueDate" label="Due date" type="date" />
+          <camunda:formField id="IssueMilestone" label="Milestone" type="string">
+            <camunda:validation>
+              <camunda:constraint name="validator" config="com.f4erp.help_desk.utils.validators.UUIDValidator" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="IssueLabel" label="Label" type="string">
+            <camunda:validation>
+              <camunda:constraint name="validator" config="com.f4erp.help_desk.utils.validators.UUIDValidator" />
+            </camunda:validation>
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>SequenceFlow_0oxlz04</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:endEvent id="EndEvent_1daslal" name="Issue Closed" />
+    <bpmn:sequenceFlow id="SequenceFlow_0oxlz04" sourceRef="StartEvent_1" targetRef="ExclusiveGateway_1aj1bmn" />
+    <bpmn:endEvent id="EndEvent_13mk5pv">
+      <bpmn:incoming>SequenceFlow_0b2osns</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_0pj68tk" sourceRef="Task_02drslm" targetRef="Task_1wgs4dw" />
+    <bpmn:userTask id="Task_02drslm" name="Assignee" camunda:assignee="${issueAssignee}">
+      <bpmn:incoming>SequenceFlow_1rlxb14</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0pj68tk</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="ExclusiveGateway_1aj1bmn">
+      <bpmn:incoming>SequenceFlow_0oxlz04</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1rlxb14</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_09q093b</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="SequenceFlow_1rlxb14" sourceRef="ExclusiveGateway_1aj1bmn" targetRef="Task_02drslm">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${ IssueAssignee }</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_09q093b" sourceRef="ExclusiveGateway_1aj1bmn" targetRef="Task_0hjmhq6">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${ not issueAssignee }</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_1lqny5s" sourceRef="Task_0hjmhq6" targetRef="Task_1wgs4dw" />
+    <bpmn:sequenceFlow id="SequenceFlow_0b2osns" sourceRef="Task_1wgs4dw" targetRef="EndEvent_13mk5pv" />
+    <bpmn:userTask id="Task_0hjmhq6" name="Tell admin to assign somebody" camunda:assignee="${ hostelAdmin }">
+      <bpmn:incoming>SequenceFlow_09q093b</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1lqny5s</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="Task_1wgs4dw" name="Notify User" camunda:class="com.f4erp.help_desk.LoggerDelegate">
+      <bpmn:incoming>SequenceFlow_1lqny5s</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_0pj68tk</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0b2osns</bpmn:outgoing>
+    </bpmn:serviceTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1dy5dyx">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="IssueLifeCycle">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
-        <dc:Bounds x="152" y="82" width="36" height="36" />
+        <dc:Bounds x="179" y="173" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="162" y="216" width="70" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="EndEvent_0ylzhm4_di" bpmnElement="EndEvent_0ylzhm4">
-        <dc:Bounds x="1262" y="82" width="36" height="36" />
+      <bpmndi:BPMNShape id="EndEvent_1daslal_di" bpmnElement="EndEvent_1daslal">
+        <dc:Bounds x="1532" y="173" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1519" y="216" width="65" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0oxlz04_di" bpmnElement="SequenceFlow_0oxlz04">
+        <di:waypoint x="215" y="191" />
+        <di:waypoint x="245" y="191" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="EndEvent_13mk5pv_di" bpmnElement="EndEvent_13mk5pv">
+        <dc:Bounds x="1352" y="173" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0pj68tk_di" bpmnElement="SequenceFlow_0pj68tk">
+        <di:waypoint x="410" y="260" />
+        <di:waypoint x="490" y="260" />
+        <di:waypoint x="490" y="231" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="UserTask_1cy93of_di" bpmnElement="Task_02drslm">
+        <dc:Bounds x="310" y="220" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ExclusiveGateway_1aj1bmn_di" bpmnElement="ExclusiveGateway_1aj1bmn" isMarkerVisible="true">
+        <dc:Bounds x="245" y="166" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1rlxb14_di" bpmnElement="SequenceFlow_1rlxb14">
+        <di:waypoint x="270" y="216" />
+        <di:waypoint x="270" y="260" />
+        <di:waypoint x="310" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_09q093b_di" bpmnElement="SequenceFlow_09q093b">
+        <di:waypoint x="270" y="166" />
+        <di:waypoint x="270" y="111" />
+        <di:waypoint x="310" y="111" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1lqny5s_di" bpmnElement="SequenceFlow_1lqny5s">
+        <di:waypoint x="410" y="121" />
+        <di:waypoint x="490" y="121" />
+        <di:waypoint x="490" y="151" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0b2osns_di" bpmnElement="SequenceFlow_0b2osns">
+        <di:waypoint x="540" y="191" />
+        <di:waypoint x="1352" y="191" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="UserTask_1cpu2jn_di" bpmnElement="Task_0hjmhq6">
+        <dc:Bounds x="310" y="81" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_12zebuf_di" bpmnElement="Task_1wgs4dw">
+        <dc:Bounds x="440" y="151" width="100" height="80" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

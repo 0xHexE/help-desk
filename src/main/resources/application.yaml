@@ -6,6 +6,7 @@ spring.datasource:
 spring.h2.console.enabled: true
 
 camunda.bpm:
+  process-engine-name: F4ERP
   filter:
     create: All Tasks
 
@@ -14,8 +15,7 @@ plugin.identity.keycloak:
   keycloakAdminUrl: https://id.f4erp.com/auth/admin/realms/dev
   clientId: help-desk
   clientSecret: 6df5ecf8-358c-453b-b104-fb495d9a35a3
-  useEmailAsCamundaUserId: false
-  useUsernameAsCamundaUserId: true
+  useEmailAsCamundaUserId: true
   administratorGroupName: camunda-admin
 
 server.port: 3000
