@@ -8,7 +8,7 @@ import java.util.UUID
 public class UUIDValidator : FormFieldValidator {
 
     override fun validate(submittedValue: Any, validatorContext: FormFieldValidatorContext): Boolean {
-        if (submittedValue == "" || submittedValue == null) {
+        if (submittedValue == "") {
             return true
         }
 

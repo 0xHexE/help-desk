@@ -20,15 +20,19 @@ open class WebAppSecurityConfig : WebSecurityConfigurerAdapter() {
     @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
         http
-                .csrf()
-                .ignoringAntMatchers("/api/**")
+                .csrf().ignoringAntMatchers("/api/**")
                 .and()
                 .antMatcher("/**")
                 .authorizeRequests()
                 .antMatchers("/app/**")
                 .authenticated()
                 .anyRequest()
-                .permitAll()
+                .permitAll().and()
+                .logout()
+                .logoutRequestMatcher(AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("http://keycloak/auth/realms/master/protocol/openid-connect/logout?redirect_uri=backToCamunda")
+                .addLogoutHandler(KeycloakLogoutHandler())
+                .clearAuthentication(true)
     }
 
     @Bean
