@@ -11,21 +11,22 @@ camunda.bpm:
     create: All Tasks
 
 plugin.identity.keycloak:
-  keycloakIssuerUrl: http://localhost:8080/auth/realms/dev
-  keycloakAdminUrl: http://localhost:8080/auth/realms/dev/admin
-  clientId: account
-  clientSecret: f6694ac7-89e0-4ef4-88e8-5eea85c6d6c1
+  keycloakIssuerUrl: https://id.f4erp.com/auth/realms/dev
+  keycloakAdminUrl: https://id.f4erp.com/auth/admin/realms/dev
+  clientId: help-desk
+  clientSecret: 6df5ecf8-358c-453b-b104-fb495d9a35a3
   useEmailAsCamundaUserId: true
+  administratorGroupName: camunda-admin
 
 server.port: 3000
 
 security:
   oauth2:
     client:
-      client-id: account
-      client-secret: f6694ac7-89e0-4ef4-88e8-5eea85c6d6c1
-      accessTokenUri: http://localhost:8080/auth/realms/dev/protocol/openid-connect/token
-      userAuthorizationUri: http://localhost:8080/auth/realms/dev/protocol/openid-connect/auth
+      client-id: help-desk
+      client-secret: 6df5ecf8-358c-453b-b104-fb495d9a35a3
+      accessTokenUri: https://id.f4erp.com/auth/realms/dev/protocol/openid-connect/token
+      userAuthorizationUri: https://id.f4erp.com/auth/realms/dev/protocol/openid-connect/auth
       scope: openid profile email
     resource:
-      userInfoUri: http://localhost:8080/auth/realms/dev/protocol/openid-connect/userinfo
+      userInfoUri: https://id.f4erp.com/auth/realms/dev/protocol/openid-connect/userinfo
