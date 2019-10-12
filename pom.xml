@@ -23,7 +23,7 @@
         and EE repository below
         -->
         <camundaSpringBoot.version>3.3.1</camundaSpringBoot.version>
-        <springBoot.version>2.1.5.RELEASE</springBoot.version>
+        <springBoot.version>2.1.9.RELEASE</springBoot.version>
 
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -92,6 +92,16 @@
             <groupId>org.webjars</groupId>
             <artifactId>swagger-ui</artifactId>
             <version>3.1.4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-rest</artifactId>
         </dependency>
 
         <dependency>
@@ -187,6 +197,17 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.2.8</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-jpa -->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jpa</artifactId>
+        </dependency>
         <!-- Add your own dependencies here, if in compile scope, they are added to the jar -->
 
     </dependencies>

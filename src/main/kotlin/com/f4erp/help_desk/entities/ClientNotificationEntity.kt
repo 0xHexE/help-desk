@@ -6,8 +6,8 @@ import javax.persistence.GeneratedValue
 import javax.persistence.Id
 
 @Entity
-data class ClientNotificationEntity(
-        @Id @GeneratedValue val id: Id,
-        @Column val description: String,
-        @Column val type: String
-)
+class ClientNotificationEntity {
+    @Id @GeneratedValue val id: Long? = null
+    @Column val description: String? = null
+    @Column val type: String? = null
+}

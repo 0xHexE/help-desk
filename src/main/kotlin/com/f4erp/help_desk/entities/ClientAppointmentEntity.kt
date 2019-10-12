@@ -4,8 +4,8 @@ import java.util.*
 import javax.persistence.*
 
 @Entity
-data class ClientAppointmentEntity(
-        @Id @GeneratedValue val id: Long,
-        @ManyToOne val client: ClientsEntity,
-        @Column val notNullable: Date
-)
+class ClientAppointmentEntity {
+    @Id @GeneratedValue val id: Long? = null
+    @ManyToOne val client: ClientEntity? = null
+    @Column val notNullable: Date? = null
+}

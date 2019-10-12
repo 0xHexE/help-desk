@@ -1,7 +1,8 @@
 spring.datasource:
-  url: jdbc:h2:./camunda-db;DB_CLOSE_DELAY=-1;MVCC=TRUE;DB_CLOSE_ON_EXIT=FALSE
-  username: sa
-  password: sa
+  url: jdbc:postgresql://localhost/helpdesk
+  username: postgres
+  password:
+
 
 spring.h2.console.enabled: true
 
@@ -30,3 +31,14 @@ server.port: 3000
 #      scope: openid profile email
 #    resource:
 #      userInfoUri: https://id.f4erp.com/auth/realms/dev/protocol/openid-connect/userinfo
+spring:
+  jpa:
+    generate-ddl: true
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+  data:
+    rest:
+      base-path: /api/v1/data
+
+spring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation: true
