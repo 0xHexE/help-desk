@@ -36,16 +36,6 @@ open class WebAppSecurityConfig : WebSecurityConfigurerAdapter() {
     }
 
     @Bean
-    open fun containerBasedAuthenticationFilter(): FilterRegistrationBean<*> {
-        val filterRegistration: FilterRegistrationBean<ContainerBasedAuthenticationFilter> = FilterRegistrationBean<ContainerBasedAuthenticationFilter>()
-        filterRegistration.filter = ContainerBasedAuthenticationFilter()
-        filterRegistration.initParameters = Collections.singletonMap<String, String>("authentication-provider", "com.f4erp.help_desk.auth.KeycloakAuthenticationProvider")
-        filterRegistration.order = 101
-        filterRegistration.addUrlPatterns("/app/*")
-        return filterRegistration
-    }
-
-    @Bean
     open fun requestContextListener(): RequestContextListener {
         return RequestContextListener()
     }

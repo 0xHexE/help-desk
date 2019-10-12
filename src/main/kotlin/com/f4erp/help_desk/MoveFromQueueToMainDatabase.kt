@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component
 @Component("moveFromQueueToMainDatabase")
 class MoveFromQueueToMainDatabase : JavaDelegate {
 
-    private val confirmationCode;
 
     @Throws(Exception::class)
     override fun execute(execution: DelegateExecution) {

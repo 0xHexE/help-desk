@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component
 @Component("sendConfirmationSms")
 class SendConfirmationSms : JavaDelegate {
 
-    private val confirmationCode;
 
     @Throws(Exception::class)
     override fun execute(execution: DelegateExecution) {

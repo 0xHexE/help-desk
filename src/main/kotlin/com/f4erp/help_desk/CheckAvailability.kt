@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component
 @Component("checkAvailability")
 class CheckAvailability : JavaDelegate {
     
-    private val DB;
 
     @Throws(Exception::class)
     override fun execute(execution: DelegateExecution) {

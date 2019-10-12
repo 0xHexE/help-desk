@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component
 @Component("notifyUser")
 class NotifyUser : JavaDelegate {
 
-    private val msg;
 
     @Throws(Exception::class)
     override fun execute(execution: DelegateExecution) {

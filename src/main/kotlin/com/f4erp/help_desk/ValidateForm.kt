@@ -9,14 +9,14 @@ class ValidateForm : JavaDelegate {
 
     @Throws(Exception::class)
     override fun execute(execution: DelegateExecution) {
-        var name: String = execute.getVariable("name")
-        var date: String = execute.getVariable("date")
-        var time: String = execute.getVariable("time")
+        var name: String = execution.getVariable("name").toString()
+        var date: String = execution.getVariable("date").toString()
+        var time: String = execution.getVariable("time").toString()
 
-        if ( !name.matches("/^[a-z ,.'-]+$/i") ) {
-            // do something name does not 
-            // match regex
-        }
+//        if ( !name.matches(/^[a-z ,.'-]+$/i) ) {
+//            // do something name does not
+//            // match regex
+//        }
 
         // ToDo: 
         // validate date and time

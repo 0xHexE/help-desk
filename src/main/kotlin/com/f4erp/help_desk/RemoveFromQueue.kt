@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component
 @Component("removeFromQueue")
 class RemoveFromQueue : JavaDelegate {
 
-    private val Form;
 
     @Throws(Exception::class)
     override fun execute(execution: DelegateExecution) {

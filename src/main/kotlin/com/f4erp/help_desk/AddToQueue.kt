@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component
 @Component("addToQueue")
 class AddToQueue : JavaDelegate {
     
-    private val DB;
+    private val DB = null;
 
     @Throws(Exception::class)
     override fun execute(execution: DelegateExecution) {

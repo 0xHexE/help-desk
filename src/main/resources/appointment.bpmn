@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_0s0g1ie" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.3.4">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_0s0g1ie" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.3.5">
   <bpmn:process id="appointment" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>SequenceFlow_12g99zp</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="SequenceFlow_12g99zp" sourceRef="StartEvent_1" targetRef="Task_1kofdej" />
-    <bpmn:serviceTask id="Task_1kofdej" name="Add Appointment to DB">
+    <bpmn:serviceTask id="Task_1kofdej" name="Add Appointment to DB" camunda:class="">
       <bpmn:incoming>SequenceFlow_12g99zp</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0wt7tat</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -65,7 +65,7 @@
     <bpmn:boundaryEvent id="IntermediateThrowEvent_11pzb6t" name="Wait for 15 minutes" attachedToRef="Task_006zeou">
       <bpmn:timerEventDefinition />
     </bpmn:boundaryEvent>
-    <bpmn:sendTask id="Task_006zeou" name="Send Confermation SMS">
+    <bpmn:sendTask id="Task_006zeou" name="Send Confermation SMS" camunda:class="com.f4erp.help_desk.SendConfirmationSms">
       <bpmn:incoming>SequenceFlow_01jjoac</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0y7qrr1</bpmn:outgoing>
     </bpmn:sendTask>
