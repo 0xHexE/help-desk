@@ -1,5 +1,6 @@
 package com.f4erp.help_desk.entities
 
+import org.camunda.bpm.engine.impl.persistence.entity.UserEntity
 import javax.persistence.*
 
 @Entity
@@ -9,8 +10,8 @@ class DrAppointment{
     private val id: Long? = null
     @OneToOne
     @JoinColumn
-    private val clientEntity: ClientEntity? = null
+    private val clientEntity: UserEntity? = null
     @OneToOne
     @JoinColumn
-    private val doctor: DoctorEntity? = null
+    private val doctor: UserEntity? = null
 }
