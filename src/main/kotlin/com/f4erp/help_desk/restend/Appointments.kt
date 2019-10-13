@@ -13,19 +13,17 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import javax.validation.Valid
 
-
 @RestController
 @RequestMapping("/appointment")
 class Appointments(
         @field:Autowired private val runtimeService: RuntimeService,
-        @field:Autowired private val appointmentRespotory: AppointmentsRepository
+        @field:Autowired private val appointmentsRepository: AppointmentsRepository
 ) {
 
-    @GetMapping("/from-db")
-    fun getFromDatabase(): MutableIterable<AppointmentEntity> {
-        return appointmentRespotory.findAll()
+    @GetMapping("/get-appointments")
+    fun getAppointments(): MutableIterable<AppointmentEntity> {
+        return this.appointmentsRepository.findAll()
     }
-
 
     @GetMapping("/pending")
     fun getPendingProcesses(): MutableList<ProcessInstance>? {
