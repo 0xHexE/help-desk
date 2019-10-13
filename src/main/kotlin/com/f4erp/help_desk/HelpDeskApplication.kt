@@ -6,7 +6,7 @@ import org.springframework.boot.runApplication
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 
 @SpringBootApplication
-@EnableJpaRepositories
+@EnableJpaRepositories(basePackages = ["com.f4erp.help_desk.repositories"])
 @EnableProcessApplication("HelpDesk")
 open class HelpDeskApplication
 

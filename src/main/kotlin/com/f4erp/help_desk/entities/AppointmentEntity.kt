@@ -1,9 +1,10 @@
 package com.f4erp.help_desk.entities
 
+import java.sql.Date
 import javax.persistence.*
 
 @Entity
-class DrAppointmentEntity {
+class AppointmentEntity {
     @GeneratedValue
     @Id
     private val id: Long? = null
@@ -13,4 +14,6 @@ class DrAppointmentEntity {
     @OneToOne
     @JoinColumn
     private val doctor: UserEntity? = null
+    @Column(nullable = false)
+    private val time: Date? = null
 }

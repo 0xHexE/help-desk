@@ -1,5 +1,7 @@
 package com.f4erp.help_desk.restend
 
+import com.f4erp.help_desk.entities.AppointmentEntity
+import com.f4erp.help_desk.repositories.AppointmentsRepository
 import com.f4erp.help_desk.validation.NewAppointment
 import org.camunda.bpm.engine.RuntimeService
 import org.camunda.bpm.engine.runtime.ProcessInstance
@@ -14,8 +16,17 @@ import javax.validation.Valid
 
 @RestController
 @RequestMapping("/appointment")
-class Appointments(@field:Autowired private val runtimeService: RuntimeService
+class Appointments(
+        @field:Autowired private val runtimeService: RuntimeService,
+        @field:Autowired private val appointmentRespotory: AppointmentsRepository
 ) {
+
+    @GetMapping("/from-db")
+    fun getFromDatabase(): MutableIterable<AppointmentEntity> {
+        return appointmentRespotory.findAll()
+    }
+
+
     @GetMapping("/pending")
     fun getPendingProcesses(): MutableList<ProcessInstance>? {
         return runtimeService.createProcessInstanceQuery()
