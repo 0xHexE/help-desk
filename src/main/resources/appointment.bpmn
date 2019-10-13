@@ -5,8 +5,7 @@
                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_0e3n9ln"
                   targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.3.5"
-                  xsi:schemaLocation="http://camunda.org/schema/1.0/bpmn
-http://camunda.org/schema/1.0/bpmn ">
+                  xsi:schemaLocation="http://camunda.org/schema/1.0/bpmn ">
   <bpmn:process id="appointment" name="Add into appointment database" isExecutable="true">
     <bpmn:startEvent id="StartAppointment" name="Start appointment">
       <bpmn:extensionElements>

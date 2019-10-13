@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_056te3s" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.3.5">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn"
+                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_056te3s"
+                  targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.3.5">
   <bpmn:process id="Onboard" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1" camunda:formKey="StartOnboard">
       <bpmn:extensionElements>
@@ -19,18 +24,28 @@
               <camunda:constraint name="required" />
             </camunda:validation>
           </camunda:formField>
-          <camunda:formField id="Doctor" label="Doctor" type="string">
-            <camunda:validation>
-              <camunda:constraint name="required" />
-            </camunda:validation>
-          </camunda:formField>
-          <camunda:formField id="Description" type="string" />
+          <camunda:formField id="Description" type="string"/>
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:outgoing>SequenceFlow_16a0xkj</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_16a0xkj" sourceRef="StartEvent_1" targetRef="Task_1kw3l0n" />
-    <bpmn:userTask id="Task_1kw3l0n" name="Verify from the doctor" camunda:assignee="${ Doctor }">
+    <bpmn:sequenceFlow id="SequenceFlow_16a0xkj" sourceRef="StartEvent_1" targetRef="Task_1kw3l0n"/>
+    <bpmn:userTask id="Task_1kw3l0n" name="Verify from the doctor">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="Accept" type="boolean">
+            <camunda:validation>
+              <camunda:constraint name="required"/>
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="Doctor" label="Doctor" type="string" defaultValue="Doctor">
+            <camunda:validation>
+              <camunda:constraint name="validator" config="com.f4erp.help_desk.utils.validators.UUIDValidator"/>
+              <camunda:constraint name="required" />
+            </camunda:validation>
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_16a0xkj</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1hf7f0i</bpmn:outgoing>
     </bpmn:userTask>
@@ -40,7 +55,9 @@
       <bpmn:outgoing>SequenceFlow_0vj1aeb</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="SequenceFlow_1hf7f0i" sourceRef="Task_1kw3l0n" targetRef="ExclusiveGateway_0hduxt0" />
-    <bpmn:sequenceFlow id="SequenceFlow_0lo71wz" sourceRef="ExclusiveGateway_0hduxt0" targetRef="Task_1493zc1" />
+    <bpmn:sequenceFlow id="SequenceFlow_0lo71wz" sourceRef="ExclusiveGateway_0hduxt0" targetRef="Task_1493zc1">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${ not Accept }</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:serviceTask id="Task_1493zc1" name="Send failed message to the user" camunda:class="com.f4erp.help_desk.tasks.NotifyUserForAppointment">
       <bpmn:incoming>SequenceFlow_0lo71wz</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0oh17yl</bpmn:outgoing>
@@ -49,7 +66,9 @@
       <bpmn:incoming>SequenceFlow_0oh17yl</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="SequenceFlow_0oh17yl" sourceRef="Task_1493zc1" targetRef="EndEvent_0s7h04r" />
-    <bpmn:sequenceFlow id="SequenceFlow_0vj1aeb" sourceRef="ExclusiveGateway_0hduxt0" targetRef="Task_0i2dhmu" />
+    <bpmn:sequenceFlow id="SequenceFlow_0vj1aeb" sourceRef="ExclusiveGateway_0hduxt0" targetRef="Task_0i2dhmu">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${ Accept }</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_00ibply" sourceRef="Task_0i2dhmu" targetRef="Task_09njmfo" />
     <bpmn:endEvent id="EndEvent_12zpjqi">
       <bpmn:incoming>SequenceFlow_14nzvwi</bpmn:incoming>
@@ -71,33 +90,31 @@
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Onboard">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
-          <dc:Bounds x="179" y="171" width="36" height="36"/>
+        <dc:Bounds x="179" y="171" width="36" height="36"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_0crocmt_di" bpmnElement="TextAnnotation_0crocmt">
         <dc:Bounds x="220" y="80" width="100" height="40" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Association_0mrqmta_di" bpmnElement="Association_0mrqmta">
-          <di:waypoint x="208" y="175"/>
+        <di:waypoint x="208" y="175"/>
         <di:waypoint x="253" y="120" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_16a0xkj_di" bpmnElement="SequenceFlow_16a0xkj">
-          <di:waypoint x="215" y="189"/>
-          <di:waypoint x="253" y="189"/>
-          <di:waypoint x="253" y="187"/>
-        <di:waypoint x="290" y="187" />
+        <di:waypoint x="215" y="189"/>
+        <di:waypoint x="290" y="189"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="UserTask_1ar2gwx_di" bpmnElement="Task_1kw3l0n">
-        <dc:Bounds x="290" y="147" width="100" height="80" />
+        <dc:Bounds x="290" y="149" width="100" height="80"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="ExclusiveGateway_0hduxt0_di" bpmnElement="ExclusiveGateway_0hduxt0" isMarkerVisible="true">
-        <dc:Bounds x="465" y="162" width="50" height="50" />
+        <dc:Bounds x="465" y="164" width="50" height="50"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_1hf7f0i_di" bpmnElement="SequenceFlow_1hf7f0i">
-        <di:waypoint x="390" y="187" />
-        <di:waypoint x="465" y="187" />
+        <di:waypoint x="390" y="189"/>
+        <di:waypoint x="465" y="189"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_0lo71wz_di" bpmnElement="SequenceFlow_0lo71wz">
-        <di:waypoint x="490" y="212" />
+        <di:waypoint x="490" y="214"/>
         <di:waypoint x="490" y="260" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="ServiceTask_0yeu5ia_di" bpmnElement="Task_1493zc1">
@@ -111,25 +128,25 @@
         <di:waypoint x="490" y="392" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_0vj1aeb_di" bpmnElement="SequenceFlow_0vj1aeb">
-        <di:waypoint x="515" y="187" />
-        <di:waypoint x="590" y="187" />
+        <di:waypoint x="515" y="189"/>
+        <di:waypoint x="590" y="189"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_00ibply_di" bpmnElement="SequenceFlow_00ibply">
-        <di:waypoint x="690" y="187" />
-        <di:waypoint x="770" y="187" />
+        <di:waypoint x="690" y="189"/>
+        <di:waypoint x="770" y="189"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="EndEvent_12zpjqi_di" bpmnElement="EndEvent_12zpjqi">
-        <dc:Bounds x="952" y="169" width="36" height="36" />
+        <dc:Bounds x="952" y="171" width="36" height="36"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_14nzvwi_di" bpmnElement="SequenceFlow_14nzvwi">
-        <di:waypoint x="870" y="187" />
-        <di:waypoint x="952" y="187" />
+        <di:waypoint x="870" y="189"/>
+        <di:waypoint x="952" y="189"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="ServiceTask_17l49ay_di" bpmnElement="Task_0i2dhmu">
-        <dc:Bounds x="590" y="147" width="100" height="80" />
+        <dc:Bounds x="590" y="149" width="100" height="80"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="ServiceTask_1dch8zc_di" bpmnElement="Task_09njmfo">
-        <dc:Bounds x="770" y="147" width="100" height="80" />
+        <dc:Bounds x="770" y="149" width="100" height="80"/>
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

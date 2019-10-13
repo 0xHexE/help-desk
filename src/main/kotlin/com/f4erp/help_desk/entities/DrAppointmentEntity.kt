@@ -1,10 +1,9 @@
 package com.f4erp.help_desk.entities
 
-import org.camunda.bpm.engine.impl.persistence.entity.UserEntity
 import javax.persistence.*
 
 @Entity
-class DrAppointment{
+class DrAppointmentEntity {
     @GeneratedValue
     @Id
     private val id: Long? = null

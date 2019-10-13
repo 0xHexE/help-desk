@@ -6,7 +6,7 @@ import javax.persistence.GeneratedValue
 import javax.persistence.Id
 
 @Entity
-class UsersEntity {
+class UserEntity {
     @GeneratedValue
     @Id
     val id: Long = 0
