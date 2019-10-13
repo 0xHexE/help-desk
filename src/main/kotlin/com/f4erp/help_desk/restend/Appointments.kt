@@ -37,7 +37,7 @@ class Appointments(@field:Autowired private val runtimeService: RuntimeService
     fun createNewAppointment(
             @Valid newAppointment: NewAppointment,
             bindingResult: BindingResult
-            ): String? {
+    ): String? {
 
         // TODO: GET ASSIGNEE FROM DB
 
