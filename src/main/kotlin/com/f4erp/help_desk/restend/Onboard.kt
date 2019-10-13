@@ -16,13 +16,12 @@ class Onboard(@field:Autowired private val runtimeService: RuntimeService) {
             @RequestBody body: Map<String, Any>
     ): String? {
         return this.runtimeService
-                .startProcessInstanceByKey("onboard",
+                .startProcessInstanceByKey("Onboard",
                         mapOf(
                                 "Name" to body["name"] as String,
                                 "DateOfBirth" to Date(body["dateOfBirth"] as Long * 1000),
-                                "Address" to body["address"],
-                                "Doctor" to body["doctor"],
-                                "Description" to body["description"]
+                                "Address" to body["address"] as String,
+                                "Description" to body["description"] as String
                         )
                 )
                 .processInstanceId

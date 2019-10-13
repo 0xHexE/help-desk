@@ -3,9 +3,6 @@ spring.datasource:
   username: postgres
   password:
 
-
-spring.h2.console.enabled: true
-
 camunda.bpm:
   process-engine-name: F4ERP
   filter:
@@ -37,8 +34,6 @@ spring:
 
   datasource:
     driver-class-name: org.postgresql.Driver
-  data:
-    rest:
-      base-path: /api/v1/data
 
 spring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation: true
+

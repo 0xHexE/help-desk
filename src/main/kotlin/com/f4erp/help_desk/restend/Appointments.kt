@@ -1,14 +1,14 @@
 package com.f4erp.help_desk.restend
 
 import com.f4erp.help_desk.validation.NewAppointment
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
 import org.camunda.bpm.engine.RuntimeService
 import org.camunda.bpm.engine.runtime.ProcessInstance
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.validation.BindingResult
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RestController
 import javax.validation.Valid
 
 
@@ -42,7 +42,7 @@ class Appointments(@field:Autowired private val runtimeService: RuntimeService
         // TODO: GET ASSIGNEE FROM DB
 
         val variables = mapOf(
-//                "Assignee" to newAppointment,
+                "Assignee" to newAppointment,
                 "Date" to newAppointment.Date,
                 "Description" to newAppointment.Description,
                 "Issue" to newAppointment.Issue,

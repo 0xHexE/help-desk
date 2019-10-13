@@ -10,7 +10,7 @@
     <bpmn:startEvent id="StartAppointment" name="Start appointment">
       <bpmn:extensionElements>
         <camunda:formData businessKey="ID">
-          <camunda:formField id="ID" type="string">
+          <camunda:formField id="ID" label="AppointmentID" type="string">
             <camunda:validation>
               <camunda:constraint name="validator" config="com.f4erp.help_desk.utils.validators.UUIDValidator"/>
             </camunda:validation>

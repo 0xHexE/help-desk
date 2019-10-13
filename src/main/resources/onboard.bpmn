@@ -6,7 +6,7 @@
                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_056te3s"
                   targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.3.5">
   <bpmn:process id="Onboard" isExecutable="true">
-    <bpmn:startEvent id="StartEvent_1" camunda:formKey="StartOnboard">
+    <bpmn:startEvent id="StartEvent_1">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="Name" label="Name" type="string">
@@ -19,12 +19,12 @@
               <camunda:constraint name="required" />
             </camunda:validation>
           </camunda:formField>
-          <camunda:formField id="Address" type="string">
+          <camunda:formField id="Address" label="Address" type="string">
             <camunda:validation>
               <camunda:constraint name="required" />
             </camunda:validation>
           </camunda:formField>
-          <camunda:formField id="Description" type="string"/>
+          <camunda:formField id="Description" label="Description" type="string"/>
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:outgoing>SequenceFlow_16a0xkj</bpmn:outgoing>
