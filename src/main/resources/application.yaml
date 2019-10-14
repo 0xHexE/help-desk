@@ -18,6 +18,7 @@ camunda.bpm:
 
 server.port: 3000
 
+
 #security:
 #  oauth2:
 #    client:
@@ -31,9 +32,17 @@ server.port: 3000
 spring:
   jpa:
     generate-ddl: true
-
+  main:
+    allow-bean-definition-overriding: true
   datasource:
     driver-class-name: org.postgresql.Driver
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com
 
 spring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation: true
 
+
+security.oauth2.resource.id: 'your-firebase-app-id'

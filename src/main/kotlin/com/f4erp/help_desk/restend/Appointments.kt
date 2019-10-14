@@ -19,7 +19,6 @@ class Appointments(
         @field:Autowired private val runtimeService: RuntimeService,
         @field:Autowired private val appointmentsRepository: AppointmentsRepository
 ) {
-
     @GetMapping("/get-appointments")
     fun getAppointments(): MutableIterable<AppointmentEntity> {
         return this.appointmentsRepository.findAll()
