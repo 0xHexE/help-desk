@@ -65,10 +65,17 @@
             <version>${camundaSpringBoot.version}</version>
         </dependency>
 
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework.security.oauth.boot</groupId>-->
-        <!--            <artifactId>spring-security-oauth2-autoconfigure</artifactId>-->
-        <!--        </dependency>-->
+<!--                <dependency>-->
+<!--                    <groupId>org.springframework.security.oauth.boot</groupId>-->
+<!--                    <artifactId>spring-security-oauth2-autoconfigure</artifactId>-->
+<!--                    <version>2.1.9.RELEASE</version>-->
+<!--                </dependency>-->
+
+        <dependency>
+            <groupId>com.google.firebase</groupId>
+            <artifactId>firebase-admin</artifactId>
+            <version>6.10.0</version>
+        </dependency>
 
         <dependency>
             <groupId>javax.validation</groupId>
@@ -133,10 +140,10 @@
             <scope>compile</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-security</artifactId>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -225,10 +232,10 @@
             <artifactId>spring-data-jpa</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-rest</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-data-rest</artifactId>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
@@ -258,11 +265,11 @@
           <url>https://app.camunda.com/nexus/content/repositories/camunda-bpm-ee</url>
         </repository>
         -->
-        <repository>
-            <name>firebase-auth</name>
-            <id>firebase-auth</id>
-            <url>https://dl.bintray.com/ageofmobile/spring-firebase-auth</url>
-        </repository>
+<!--        <repository>-->
+<!--            <name>firebase-auth</name>-->
+<!--            <id>firebase-auth</id>-->
+<!--            <url>https://dl.bintray.com/ageofmobile/spring-firebase-auth</url>-->
+<!--        </repository>-->
     </repositories>
 
     <build>

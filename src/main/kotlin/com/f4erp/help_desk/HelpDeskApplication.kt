@@ -1,6 +1,5 @@
 package com.f4erp.help_desk
 
-//import firebase.auth.EnableFirebaseSecurity
 import org.camunda.bpm.spring.boot.starter.annotation.EnableProcessApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication

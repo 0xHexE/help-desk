@@ -1,62 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
-                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
-                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn"
-                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_0e3n9ln"
-                  targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.3.5"
-                  xsi:schemaLocation="http://camunda.org/schema/1.0/bpmn ">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_0e3n9ln" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.3.5" xsi:schemaLocation="http://camunda.org/schema/1.0/bpmn ">
   <bpmn:process id="appointment" name="Add into appointment database" isExecutable="true">
     <bpmn:startEvent id="StartAppointment" name="Start appointment">
       <bpmn:extensionElements>
         <camunda:formData businessKey="ID">
           <camunda:formField id="ID" label="AppointmentID" type="string">
             <camunda:validation>
-              <camunda:constraint name="validator" config="com.f4erp.help_desk.utils.validators.UUIDValidator"/>
+              <camunda:constraint name="validator" config="com.f4erp.help_desk.utils.validators.UUIDValidator" />
             </camunda:validation>
           </camunda:formField>
           <camunda:formField id="Issue" label="Issue" type="string">
             <camunda:validation>
-              <camunda:constraint name="required"/>
+              <camunda:constraint name="required" />
             </camunda:validation>
           </camunda:formField>
           <camunda:formField id="Description" label="Description" type="string">
             <camunda:validation>
-              <camunda:constraint name="required"/>
+              <camunda:constraint name="required" />
             </camunda:validation>
           </camunda:formField>
           <camunda:formField id="Date" label="Date" type="date">
             <camunda:validation>
-              <camunda:constraint name="required"/>
+              <camunda:constraint name="required" />
             </camunda:validation>
           </camunda:formField>
-          <camunda:formField id="Time" label="Time" type="string"/>
+          <camunda:formField id="Time" label="Time" type="string" />
           <camunda:formField id="Assignee" label="Assignee" type="string">
             <camunda:validation>
-              <camunda:constraint name="required"/>
+              <camunda:constraint name="required" />
             </camunda:validation>
           </camunda:formField>
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:outgoing>SequenceFlow_08j0ovr</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:serviceTask id="Task_06wq649" name="Create new appointment"
-                      camunda:class="com.f4erp.help_desk.tasks.AddIntoAppointmentDatabase">
+    <bpmn:serviceTask id="Task_06wq649" name="Create new appointment" camunda:class="com.f4erp.help_desk.tasks.AddIntoAppointmentDatabase">
       <bpmn:incoming>SequenceFlow_08j0ovr</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0hkfby1</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:sequenceFlow id="SequenceFlow_08j0ovr" sourceRef="StartAppointment" targetRef="Task_06wq649"/>
-    <bpmn:sequenceFlow id="SequenceFlow_0hkfby1" sourceRef="Task_06wq649" targetRef="Task_1gqwpwv"/>
+    <bpmn:sequenceFlow id="SequenceFlow_08j0ovr" sourceRef="StartAppointment" targetRef="Task_06wq649" />
+    <bpmn:sequenceFlow id="SequenceFlow_0hkfby1" sourceRef="Task_06wq649" targetRef="Task_1gqwpwv" />
     <bpmn:userTask id="Task_1gqwpwv" name="Check client is available" camunda:assignee="${client}">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="IsClientAvailable" label="Is client available" type="boolean">
             <camunda:validation>
-              <camunda:constraint name="required"/>
+              <camunda:constraint name="required" />
             </camunda:validation>
           </camunda:formField>
-          <camunda:formField id="ThenWhichDate" label="If not availabe then when" type="date"/>
-          <camunda:formField id="Note" label="Note" type="string"/>
+          <camunda:formField id="ThenWhichDate" label="If not availabe then when" type="date" />
+          <camunda:formField id="Note" label="Note" type="string" />
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_0hkfby1</bpmn:incoming>
@@ -68,20 +61,20 @@
       <bpmn:outgoing>SequenceFlow_08xsgnd</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_1b96aoh</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="SequenceFlow_1ftrovt" sourceRef="Task_1gqwpwv" targetRef="ExclusiveGateway_0oqbgxc"/>
+    <bpmn:sequenceFlow id="SequenceFlow_1ftrovt" sourceRef="Task_1gqwpwv" targetRef="ExclusiveGateway_0oqbgxc" />
     <bpmn:sequenceFlow id="SequenceFlow_08xsgnd" sourceRef="ExclusiveGateway_0oqbgxc" targetRef="Task_0knnp4t">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${ not IsClientAvailable }</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:userTask id="Task_0knnp4t" name="Check is doctor avaiable">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="IsOk" label="Approve change in time?" type="boolean"/>
+          <camunda:formField id="IsOk" label="Approve change in time?" type="boolean" />
           <camunda:formField id="ThenWhichDate" label="Requested date" type="date">
             <camunda:validation>
-              <camunda:constraint name="readonly"/>
+              <camunda:constraint name="readonly" />
             </camunda:validation>
           </camunda:formField>
-          <camunda:formField id="ChangedDate" type="date"/>
+          <camunda:formField id="ChangedDate" type="date" />
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_08xsgnd</bpmn:incoming>
@@ -92,16 +85,15 @@
       <bpmn:outgoing>SequenceFlow_1mahwn3</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_096mswm</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="SequenceFlow_18813bb" sourceRef="Task_0knnp4t" targetRef="ExclusiveGateway_024y91f"/>
+    <bpmn:sequenceFlow id="SequenceFlow_18813bb" sourceRef="Task_0knnp4t" targetRef="ExclusiveGateway_024y91f" />
     <bpmn:sequenceFlow id="SequenceFlow_1mahwn3" sourceRef="ExclusiveGateway_024y91f" targetRef="Task_1gqwpwv">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${ ChangedDate }</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:serviceTask id="Task_047qo9j" name="Notify User With Email And SMS"
-                      camunda:class="com.f4erp.help_desk.tasks.NotifyUserForAppointment">
+    <bpmn:serviceTask id="Task_047qo9j" name="Notify User With Email And SMS" camunda:class="com.f4erp.help_desk.tasks.NotifyUserForAppointment">
       <bpmn:incoming>SequenceFlow_01x8obg</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1n9ielp</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:sequenceFlow id="SequenceFlow_1n9ielp" sourceRef="Task_047qo9j" targetRef="IntermediateThrowEvent_08koyuz"/>
+    <bpmn:sequenceFlow id="SequenceFlow_1n9ielp" sourceRef="Task_047qo9j" targetRef="IntermediateThrowEvent_08koyuz" />
     <bpmn:intermediateCatchEvent id="IntermediateThrowEvent_08koyuz" name="Wait till appointment complete">
       <bpmn:incoming>SequenceFlow_1n9ielp</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0k9p294</bpmn:outgoing>
@@ -113,194 +105,191 @@
       <bpmn:incoming>SequenceFlow_04ftmbj</bpmn:incoming>
       <bpmn:incoming>SequenceFlow_0np0xm6</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_1b96aoh" sourceRef="ExclusiveGateway_0oqbgxc" targetRef="Task_0dbfh9l"/>
-    <bpmn:sequenceFlow id="SequenceFlow_01x8obg" sourceRef="Task_0dbfh9l" targetRef="Task_047qo9j"/>
-    <bpmn:sequenceFlow id="SequenceFlow_0k9p294" sourceRef="IntermediateThrowEvent_08koyuz" targetRef="Task_0hti0kr"/>
-    <bpmn:serviceTask id="Task_0hti0kr" name="Notify users for appointment"
-                      camunda:class="com.f4erp.help_desk.tasks.NotifyUserForAppointment">
+    <bpmn:sequenceFlow id="SequenceFlow_1b96aoh" sourceRef="ExclusiveGateway_0oqbgxc" targetRef="Task_0dbfh9l" />
+    <bpmn:sequenceFlow id="SequenceFlow_01x8obg" sourceRef="Task_0dbfh9l" targetRef="Task_047qo9j" />
+    <bpmn:sequenceFlow id="SequenceFlow_0k9p294" sourceRef="IntermediateThrowEvent_08koyuz" targetRef="Task_0hti0kr" />
+    <bpmn:serviceTask id="Task_0hti0kr" name="Notify users for appointment" camunda:class="com.f4erp.help_desk.tasks.NotifyUserForAppointment">
       <bpmn:incoming>SequenceFlow_0k9p294</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1hct800</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:sequenceFlow id="SequenceFlow_1hct800" sourceRef="Task_0hti0kr" targetRef="Task_0xuytw0"/>
+    <bpmn:sequenceFlow id="SequenceFlow_1hct800" sourceRef="Task_0hti0kr" targetRef="Task_0xuytw0" />
     <bpmn:userTask id="Task_0xuytw0" name="Is client arrived?">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="IsClientArrived" label="Is client arrived" type="boolean"/>
+          <camunda:formField id="IsClientArrived" label="Is client arrived" type="boolean" />
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_1hct800</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0qmf1vr</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:serviceTask id="Task_1stl9in" name="Inform user for reschedule"
-                      camunda:class="com.f4erp.help_desk.tasks.NotifyUserForAppointment">
+    <bpmn:serviceTask id="Task_1stl9in" name="Inform user for reschedule" camunda:class="com.f4erp.help_desk.tasks.NotifyUserForAppointment">
       <bpmn:incoming>SequenceFlow_1pw06il</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_04ftmbj</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:sequenceFlow id="SequenceFlow_04ftmbj" sourceRef="Task_1stl9in" targetRef="EndEvent_1creg77"/>
+    <bpmn:sequenceFlow id="SequenceFlow_04ftmbj" sourceRef="Task_1stl9in" targetRef="EndEvent_1creg77" />
     <bpmn:exclusiveGateway id="ExclusiveGateway_0pav07q">
       <bpmn:incoming>SequenceFlow_0qmf1vr</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0np0xm6</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_1pw06il</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="SequenceFlow_0qmf1vr" sourceRef="Task_0xuytw0" targetRef="ExclusiveGateway_0pav07q"/>
+    <bpmn:sequenceFlow id="SequenceFlow_0qmf1vr" sourceRef="Task_0xuytw0" targetRef="ExclusiveGateway_0pav07q" />
     <bpmn:sequenceFlow id="SequenceFlow_0np0xm6" sourceRef="ExclusiveGateway_0pav07q" targetRef="EndEvent_1creg77">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${ IsClientArrived }</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_1pw06il" sourceRef="ExclusiveGateway_0pav07q" targetRef="Task_1stl9in">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${ not IsClientArrived }</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:serviceTask id="Task_0dbfh9l" name="update the database"
-                      camunda:class="com.f4erp.help_desk.tasks.UpdateDatabase">
+    <bpmn:serviceTask id="Task_0dbfh9l" name="update the database" camunda:class="com.f4erp.help_desk.tasks.UpdateDatabase">
       <bpmn:incoming>SequenceFlow_1b96aoh</bpmn:incoming>
       <bpmn:incoming>SequenceFlow_096mswm</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_01x8obg</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:sequenceFlow id="SequenceFlow_096mswm" sourceRef="ExclusiveGateway_024y91f" targetRef="Task_0dbfh9l"/>
+    <bpmn:sequenceFlow id="SequenceFlow_096mswm" sourceRef="ExclusiveGateway_024y91f" targetRef="Task_0dbfh9l" />
     <bpmn:textAnnotation id="TextAnnotation_1ruab31">
       <bpmn:text>Start appointment</bpmn:text>
     </bpmn:textAnnotation>
-    <bpmn:association id="Association_1a9d4xg" sourceRef="StartAppointment" targetRef="TextAnnotation_1ruab31"/>
+    <bpmn:association id="Association_1a9d4xg" sourceRef="StartAppointment" targetRef="TextAnnotation_1ruab31" />
     <bpmn:textAnnotation id="TextAnnotation_0x6iqb6">
       <bpmn:text>Check is client available</bpmn:text>
     </bpmn:textAnnotation>
-    <bpmn:association id="Association_00qji99" sourceRef="ExclusiveGateway_0oqbgxc" targetRef="TextAnnotation_0x6iqb6"/>
+    <bpmn:association id="Association_00qji99" sourceRef="ExclusiveGateway_0oqbgxc" targetRef="TextAnnotation_0x6iqb6" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="appointment">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartAppointment">
-        <dc:Bounds x="179" y="159" width="36" height="36"/>
+        <dc:Bounds x="179" y="159" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="154" y="202" width="87" height="14"/>
+          <dc:Bounds x="154" y="202" width="87" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_1ruab31_di" bpmnElement="TextAnnotation_1ruab31">
-        <dc:Bounds x="220" y="70" width="100" height="39"/>
+        <dc:Bounds x="220" y="70" width="100" height="39" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Association_1a9d4xg_di" bpmnElement="Association_1a9d4xg">
-        <di:waypoint x="208" y="163"/>
-        <di:waypoint x="254" y="109"/>
+        <di:waypoint x="208" y="163" />
+        <di:waypoint x="254" y="109" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="ServiceTask_0rc3ut7_di" bpmnElement="Task_06wq649">
-        <dc:Bounds x="270" y="137" width="100" height="80"/>
+        <dc:Bounds x="270" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_08j0ovr_di" bpmnElement="SequenceFlow_08j0ovr">
-        <di:waypoint x="215" y="177"/>
-        <di:waypoint x="270" y="177"/>
+        <di:waypoint x="215" y="177" />
+        <di:waypoint x="270" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_0hkfby1_di" bpmnElement="SequenceFlow_0hkfby1">
-        <di:waypoint x="370" y="177"/>
-        <di:waypoint x="450" y="177"/>
+        <di:waypoint x="370" y="177" />
+        <di:waypoint x="450" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="UserTask_0wnkgm3_di" bpmnElement="Task_1gqwpwv">
-        <dc:Bounds x="450" y="137" width="100" height="80"/>
+        <dc:Bounds x="450" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="ExclusiveGateway_0oqbgxc_di" bpmnElement="ExclusiveGateway_0oqbgxc" isMarkerVisible="true">
-        <dc:Bounds x="615" y="152" width="50" height="50"/>
+        <dc:Bounds x="615" y="152" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="636" y="209" width="8" height="14"/>
+          <dc:Bounds x="636" y="209" width="8" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_1ftrovt_di" bpmnElement="SequenceFlow_1ftrovt">
-        <di:waypoint x="550" y="177"/>
-        <di:waypoint x="615" y="177"/>
+        <di:waypoint x="550" y="177" />
+        <di:waypoint x="615" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="TextAnnotation_0x6iqb6_di" bpmnElement="TextAnnotation_0x6iqb6">
-        <dc:Bounds x="670" y="70" width="100" height="40"/>
+        <dc:Bounds x="670" y="70" width="100" height="40" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Association_00qji99_di" bpmnElement="Association_00qji99">
-        <di:waypoint x="652" y="164"/>
-        <di:waypoint x="702" y="110"/>
+        <di:waypoint x="652" y="164" />
+        <di:waypoint x="702" y="110" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_08xsgnd_di" bpmnElement="SequenceFlow_08xsgnd">
-        <di:waypoint x="640" y="202"/>
-        <di:waypoint x="640" y="270"/>
+        <di:waypoint x="640" y="202" />
+        <di:waypoint x="640" y="270" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="UserTask_1nx03bz_di" bpmnElement="Task_0knnp4t">
-        <dc:Bounds x="590" y="270" width="100" height="80"/>
+        <dc:Bounds x="590" y="270" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="ExclusiveGateway_024y91f_di" bpmnElement="ExclusiveGateway_024y91f" isMarkerVisible="true">
-        <dc:Bounds x="755" y="285" width="50" height="50"/>
+        <dc:Bounds x="755" y="285" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_18813bb_di" bpmnElement="SequenceFlow_18813bb">
-        <di:waypoint x="690" y="310"/>
-        <di:waypoint x="755" y="310"/>
+        <di:waypoint x="690" y="310" />
+        <di:waypoint x="755" y="310" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_1mahwn3_di" bpmnElement="SequenceFlow_1mahwn3">
-        <di:waypoint x="780" y="335"/>
-        <di:waypoint x="780" y="390"/>
-        <di:waypoint x="500" y="390"/>
-        <di:waypoint x="500" y="217"/>
+        <di:waypoint x="780" y="335" />
+        <di:waypoint x="780" y="390" />
+        <di:waypoint x="500" y="390" />
+        <di:waypoint x="500" y="217" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="ServiceTask_0jdpe6o_di" bpmnElement="Task_047qo9j">
-        <dc:Bounds x="890" y="137" width="100" height="80"/>
+        <dc:Bounds x="890" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_1n9ielp_di" bpmnElement="SequenceFlow_1n9ielp">
-        <di:waypoint x="990" y="177"/>
-        <di:waypoint x="1042" y="177"/>
+        <di:waypoint x="990" y="177" />
+        <di:waypoint x="1042" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="IntermediateCatchEvent_003o2tj_di" bpmnElement="IntermediateThrowEvent_08koyuz">
-        <dc:Bounds x="1042" y="159" width="36" height="36"/>
+        <dc:Bounds x="1042" y="159" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1031" y="202" width="61" height="40"/>
+          <dc:Bounds x="1031" y="202" width="61" height="40" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="EndEvent_1creg77_di" bpmnElement="EndEvent_1creg77">
-        <dc:Bounds x="1542" y="159" width="36" height="36"/>
+        <dc:Bounds x="1542" y="159" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1529" y="121.5" width="61" height="27"/>
+          <dc:Bounds x="1529" y="121.5" width="61" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_1b96aoh_di" bpmnElement="SequenceFlow_1b96aoh">
-        <di:waypoint x="665" y="177"/>
-        <di:waypoint x="730" y="177"/>
+        <di:waypoint x="665" y="177" />
+        <di:waypoint x="730" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_01x8obg_di" bpmnElement="SequenceFlow_01x8obg">
-        <di:waypoint x="830" y="177"/>
-        <di:waypoint x="890" y="177"/>
+        <di:waypoint x="830" y="177" />
+        <di:waypoint x="890" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_0k9p294_di" bpmnElement="SequenceFlow_0k9p294">
-        <di:waypoint x="1078" y="177"/>
-        <di:waypoint x="1130" y="177"/>
+        <di:waypoint x="1078" y="177" />
+        <di:waypoint x="1130" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="ServiceTask_0y56b5w_di" bpmnElement="Task_0hti0kr">
-        <dc:Bounds x="1130" y="137" width="100" height="80"/>
+        <dc:Bounds x="1130" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_1hct800_di" bpmnElement="SequenceFlow_1hct800">
-        <di:waypoint x="1230" y="177"/>
-        <di:waypoint x="1270" y="177"/>
+        <di:waypoint x="1230" y="177" />
+        <di:waypoint x="1270" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="UserTask_0j1nmfb_di" bpmnElement="Task_0xuytw0">
-        <dc:Bounds x="1270" y="137" width="100" height="80"/>
+        <dc:Bounds x="1270" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="ServiceTask_09m19yt_di" bpmnElement="Task_1stl9in">
-        <dc:Bounds x="1390" y="270" width="100" height="80"/>
+        <dc:Bounds x="1390" y="270" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_04ftmbj_di" bpmnElement="SequenceFlow_04ftmbj">
-        <di:waypoint x="1490" y="310"/>
-        <di:waypoint x="1560" y="310"/>
-        <di:waypoint x="1560" y="195"/>
+        <di:waypoint x="1490" y="310" />
+        <di:waypoint x="1560" y="310" />
+        <di:waypoint x="1560" y="195" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="ExclusiveGateway_0pav07q_di" bpmnElement="ExclusiveGateway_0pav07q" isMarkerVisible="true">
-        <dc:Bounds x="1415" y="152" width="50" height="50"/>
+        <dc:Bounds x="1415" y="152" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0qmf1vr_di" bpmnElement="SequenceFlow_0qmf1vr">
-        <di:waypoint x="1370" y="177"/>
-        <di:waypoint x="1415" y="177"/>
+        <di:waypoint x="1370" y="177" />
+        <di:waypoint x="1415" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_0np0xm6_di" bpmnElement="SequenceFlow_0np0xm6">
-        <di:waypoint x="1465" y="177"/>
-        <di:waypoint x="1542" y="177"/>
+        <di:waypoint x="1465" y="177" />
+        <di:waypoint x="1542" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_1pw06il_di" bpmnElement="SequenceFlow_1pw06il">
-        <di:waypoint x="1440" y="202"/>
-        <di:waypoint x="1440" y="270"/>
+        <di:waypoint x="1440" y="202" />
+        <di:waypoint x="1440" y="270" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="ServiceTask_1seu089_di" bpmnElement="Task_0dbfh9l">
-        <dc:Bounds x="730" y="137" width="100" height="80"/>
+        <dc:Bounds x="730" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_096mswm_di" bpmnElement="SequenceFlow_096mswm">
-        <di:waypoint x="780" y="285"/>
-        <di:waypoint x="780" y="217"/>
+        <di:waypoint x="780" y="285" />
+        <di:waypoint x="780" y="217" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
