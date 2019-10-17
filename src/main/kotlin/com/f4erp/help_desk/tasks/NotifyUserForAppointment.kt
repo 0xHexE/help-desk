@@ -7,6 +7,6 @@ import org.springframework.stereotype.Component
 @Component("notifyUserForAppointment")
 class NotifyUserForAppointment : JavaDelegate {
     override fun execute(p0: DelegateExecution?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        // TODO: Implement notify user
     }
 }

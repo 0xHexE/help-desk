@@ -21,18 +21,24 @@ class Onboard(
 
     @PostMapping("/start")
     fun createNewClient(
-            @RequestBody body: Map<String, Any>
-    ): String? {
-        return this.runtimeService
+            @RequestBody body: Map<String, Any>,
+            @RequestHeader("Authorization") authorizationToken: String
+    ): Map<String, Any> {
+        val user = authenticator.checkIsAuthenticate(authorizationToken)
+                ?: throw HttpClientErrorException(HttpStatus.FORBIDDEN, "Unauthorized")
+        val result = this.runtimeService
                 .startProcessInstanceByKey("Onboard",
                         mapOf(
                                 "Name" to body["name"] as String,
-                                "DateOfBirth" to Date(body["dateOfBirth"] as Long * 1000),
+                                "DateOfBirth" to Date(body["dateOfBirth"] as Long),
                                 "Address" to body["address"] as String,
-                                "Description" to body["description"] as String
+                                "Description" to body["description"] as String,
+                                "uid" to user.uid,
+                                "Mobile" to body["mobile"] as String,
+                                "Email" to user.email
                         )
                 )
-                .processInstanceId
+        return mapOf("data" to mapOf("processId" to result.processInstanceId))
     }
 
     @GetMapping("status")
@@ -41,10 +47,22 @@ class Onboard(
     ): Any {
         val user = authenticator.checkIsAuthenticate(authorizationToken)
                 ?: throw HttpClientErrorException(HttpStatus.FORBIDDEN, "Unauthorized")
+
+        val count = runtimeService.createProcessInstanceQuery()
+                .activityIdIn("Task_1kw3l0n")
+                .processDefinitionKey("Onboard")
+                .variableValueEquals("uid", user.uid)
+                .active().count()
+
+        if (count == 1L) {
+            return mapOf("data" to mapOf("status" to "pending"))
+        }
+
         val userInfo = userRepository.findById(user.uid)
         if (userInfo.isEmpty) {
             return mapOf("data" to mapOf("status" to "not-registered"))
         }
-        return userInfo.get()
+
+        return mapOf("data" to mapOf("status" to "approved", userInfo to userInfo))
     }
 }

@@ -1,6 +1,6 @@
 package com.f4erp.help_desk.entities
 
-import java.sql.Date
+import java.util.*
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.Id
@@ -8,26 +8,26 @@ import javax.persistence.Id
 @Entity
 class UserEntity {
     @Id()
-    val uid: String? = null
+    var uid: String? = null
 
     @Column(nullable = true)
     val photoUrl: String? = null
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     val email: String? = null
 
     @Column
-    val userRole: String? = null
+    var userRole: String? = null
 
     @Column
-    val name: String? = null
+    var name: String? = null
 
     @Column(nullable = true)
     val mobileNumber: String? = null
 
-    @Column(nullable = true)
-    val address: String? = null
+    @Column(nullable = false)
+    var address: String? = null
 
-    @Column(nullable = true)
-    val dateOfBirth: Date? = null
+    @Column(nullable = false)
+    var dateOfBirth: Date? = null
 }
