@@ -25,9 +25,8 @@ class InsertClientIntoDatabase(
         userRepository.save(user)
         val userDoctorAssignment = UserDoctorAssignment()
         userDoctorAssignment.client = user
-        val doctor = UserEntity()
-        doctor.uid = p0.getVariable("Doctor") as String
-        userDoctorAssignment.doctor = doctor
+        val doctor = userRepository.findById(p0.getVariable("Doctor") as String)
+        userDoctorAssignment.doctor = doctor.get()
         userDoctorAssignmentRepository.save(userDoctorAssignment)
     }
 }

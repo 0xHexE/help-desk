@@ -17,5 +17,4 @@ class UUIDValidator : FormFieldValidator {
             false
         }
     }
-
 }
