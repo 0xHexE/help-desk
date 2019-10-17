@@ -21,10 +21,12 @@ class InsertClientIntoDatabase(
         user.name = p0.getVariable("Name") as String
         user.dateOfBirth = p0.getVariable("DateOfBirth") as Date
         user.uid = p0.getVariable("uid") as String
+        user.mobileNumber = p0.getVariable("Mobile") as String
+        user.email = p0.getVariable("Email") as String
         user.userRole = "client"
-        userRepository.save(user)
+        val data = userRepository.save(user)
         val userDoctorAssignment = UserDoctorAssignment()
-        userDoctorAssignment.client = user
+        userDoctorAssignment.client = data
         val doctor = userRepository.findById(p0.getVariable("Doctor") as String)
         userDoctorAssignment.doctor = doctor.get()
         userDoctorAssignmentRepository.save(userDoctorAssignment)

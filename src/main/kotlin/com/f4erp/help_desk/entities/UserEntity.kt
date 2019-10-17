@@ -14,7 +14,7 @@ class UserEntity {
     val photoUrl: String? = null
 
     @Column(nullable = true)
-    val email: String? = null
+    var email: String? = null
 
     @Column
     var userRole: String? = null
@@ -23,7 +23,7 @@ class UserEntity {
     var name: String? = null
 
     @Column(nullable = true)
-    val mobileNumber: String? = null
+    var mobileNumber: String? = null
 
     @Column(nullable = false)
     var address: String? = null
