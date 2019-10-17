@@ -5,7 +5,7 @@ import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.FirebaseToken
 
 class Authenticator(private val firebaseAuth: FirebaseAuth) {
-    public fun checkIsAuthenticate(token: String): FirebaseToken? {
+    fun checkIsAuthenticate(token: String): FirebaseToken? {
         if (!token.startsWith("Bearer ")) {
             return null
         }
@@ -13,7 +13,7 @@ class Authenticator(private val firebaseAuth: FirebaseAuth) {
             return null
         }
         return try {
-            firebaseAuth.verifyIdToken(token)
+            firebaseAuth.verifyIdToken(token.split(" ")[1])
         } catch (e: FirebaseAuthException) {
             null
         }

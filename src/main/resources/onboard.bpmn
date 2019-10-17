@@ -24,23 +24,23 @@
               <camunda:constraint name="required" />
             </camunda:validation>
           </camunda:formField>
-          <camunda:formField id="Description" label="Description" type="string"/>
+            <camunda:formField id="Description" label="Description" type="string"/>
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:outgoing>SequenceFlow_16a0xkj</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_16a0xkj" sourceRef="StartEvent_1" targetRef="Task_1kw3l0n"/>
+      <bpmn:sequenceFlow id="SequenceFlow_16a0xkj" sourceRef="StartEvent_1" targetRef="Task_1kw3l0n"/>
     <bpmn:userTask id="Task_1kw3l0n" name="Verify from the doctor">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="Accept" type="boolean">
+            <camunda:formField id="Accept" label="Accept" type="boolean">
             <camunda:validation>
-              <camunda:constraint name="required"/>
+                <camunda:constraint name="required"/>
             </camunda:validation>
           </camunda:formField>
           <camunda:formField id="Doctor" label="Doctor" type="string" defaultValue="Doctor">
             <camunda:validation>
-              <camunda:constraint name="validator" config="com.f4erp.help_desk.utils.validators.UUIDValidator"/>
+                <camunda:constraint name="validator" config="com.f4erp.help_desk.utils.validators.UUIDValidator"/>
               <camunda:constraint name="required" />
             </camunda:validation>
           </camunda:formField>
@@ -90,31 +90,31 @@
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Onboard">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
-        <dc:Bounds x="179" y="171" width="36" height="36"/>
+          <dc:Bounds x="179" y="171" width="36" height="36"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_0crocmt_di" bpmnElement="TextAnnotation_0crocmt">
         <dc:Bounds x="220" y="80" width="100" height="40" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Association_0mrqmta_di" bpmnElement="Association_0mrqmta">
-        <di:waypoint x="208" y="175"/>
+          <di:waypoint x="208" y="175"/>
         <di:waypoint x="253" y="120" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_16a0xkj_di" bpmnElement="SequenceFlow_16a0xkj">
-        <di:waypoint x="215" y="189"/>
-        <di:waypoint x="290" y="189"/>
+          <di:waypoint x="215" y="189"/>
+          <di:waypoint x="290" y="189"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="UserTask_1ar2gwx_di" bpmnElement="Task_1kw3l0n">
-        <dc:Bounds x="290" y="149" width="100" height="80"/>
+          <dc:Bounds x="290" y="149" width="100" height="80"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="ExclusiveGateway_0hduxt0_di" bpmnElement="ExclusiveGateway_0hduxt0" isMarkerVisible="true">
-        <dc:Bounds x="465" y="164" width="50" height="50"/>
+          <dc:Bounds x="465" y="164" width="50" height="50"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_1hf7f0i_di" bpmnElement="SequenceFlow_1hf7f0i">
-        <di:waypoint x="390" y="189"/>
-        <di:waypoint x="465" y="189"/>
+          <di:waypoint x="390" y="189"/>
+          <di:waypoint x="465" y="189"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_0lo71wz_di" bpmnElement="SequenceFlow_0lo71wz">
-        <di:waypoint x="490" y="214"/>
+          <di:waypoint x="490" y="214"/>
         <di:waypoint x="490" y="260" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="ServiceTask_0yeu5ia_di" bpmnElement="Task_1493zc1">
@@ -128,25 +128,25 @@
         <di:waypoint x="490" y="392" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_0vj1aeb_di" bpmnElement="SequenceFlow_0vj1aeb">
-        <di:waypoint x="515" y="189"/>
-        <di:waypoint x="590" y="189"/>
+          <di:waypoint x="515" y="189"/>
+          <di:waypoint x="590" y="189"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_00ibply_di" bpmnElement="SequenceFlow_00ibply">
-        <di:waypoint x="690" y="189"/>
-        <di:waypoint x="770" y="189"/>
+          <di:waypoint x="690" y="189"/>
+          <di:waypoint x="770" y="189"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="EndEvent_12zpjqi_di" bpmnElement="EndEvent_12zpjqi">
-        <dc:Bounds x="952" y="171" width="36" height="36"/>
+          <dc:Bounds x="952" y="171" width="36" height="36"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_14nzvwi_di" bpmnElement="SequenceFlow_14nzvwi">
-        <di:waypoint x="870" y="189"/>
-        <di:waypoint x="952" y="189"/>
+          <di:waypoint x="870" y="189"/>
+          <di:waypoint x="952" y="189"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="ServiceTask_17l49ay_di" bpmnElement="Task_0i2dhmu">
-        <dc:Bounds x="590" y="149" width="100" height="80"/>
+          <dc:Bounds x="590" y="149" width="100" height="80"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="ServiceTask_1dch8zc_di" bpmnElement="Task_09njmfo">
-        <dc:Bounds x="770" y="149" width="100" height="80"/>
+          <dc:Bounds x="770" y="149" width="100" height="80"/>
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

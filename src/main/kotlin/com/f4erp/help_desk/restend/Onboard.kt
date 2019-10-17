@@ -11,7 +11,7 @@ import org.springframework.web.client.HttpClientErrorException
 import java.util.*
 
 @RestController
-@RequestMapping("/f4erp/api/v1/onboard")
+@RequestMapping("/data/api/v1/onboard")
 class Onboard(
         @field:Autowired private val runtimeService: RuntimeService,
         @field:Autowired private val firebaseAuth: FirebaseAuth,
@@ -19,7 +19,7 @@ class Onboard(
 ) {
     private val authenticator: Authenticator = Authenticator(this.firebaseAuth)
 
-    @PostMapping
+    @PostMapping("/start")
     fun createNewClient(
             @RequestBody body: Map<String, Any>
     ): String? {
@@ -35,7 +35,7 @@ class Onboard(
                 .processInstanceId
     }
 
-    @GetMapping
+    @GetMapping("status")
     fun isUserInDb(
             @RequestHeader("Authorization") authorizationToken: String
     ): Any {
@@ -43,7 +43,7 @@ class Onboard(
                 ?: throw HttpClientErrorException(HttpStatus.FORBIDDEN, "Unauthorized")
         val userInfo = userRepository.findById(user.uid)
         if (userInfo.isEmpty) {
-            return mapOf("error" to "User is not registered", "statusCode" to 401)
+            return mapOf("data" to mapOf("status" to "not-registered"))
         }
         return userInfo.get()
     }
