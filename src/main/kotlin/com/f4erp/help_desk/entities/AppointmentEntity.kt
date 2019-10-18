@@ -1,19 +1,27 @@
 package com.f4erp.help_desk.entities
 
-import java.sql.Date
+import java.util.*
 import javax.persistence.*
 
 @Entity
 class AppointmentEntity {
     @GeneratedValue
     @Id
-    private val id: Long? = null
+    val id: Long? = null
     @OneToOne
     @JoinColumn
-    private val clientEntity: UserEntity? = null
+    var clientEntity: UserEntity? = null
     @OneToOne
     @JoinColumn
-    private val doctor: UserEntity? = null
+    var doctor: UserEntity? = null
     @Column(nullable = false)
-    private val time: Date? = null
+    var date: Date? = null
+    @Column
+    var issue: String? = null
+    @Column
+    var description: String? = null
+    @Column
+    var time: Long? = null
+    @Column
+    val status: String? = null
 }
