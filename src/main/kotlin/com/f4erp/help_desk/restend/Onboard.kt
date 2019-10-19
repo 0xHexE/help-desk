@@ -20,6 +20,7 @@ class Onboard(
     private val authenticator: Authenticator = Authenticator(this.firebaseAuth)
 
     @PostMapping("/start")
+    @Throws()
     fun createNewClient(
             @RequestBody body: Map<String, Any>,
             @RequestHeader("Authorization") authorizationToken: String
@@ -59,10 +60,15 @@ class Onboard(
         }
 
         val userInfo = userRepository.findById(user.uid)
-        if (userInfo.isEmpty) {
+
+        try {
+            if (userInfo.get() == null) {
+                return mapOf("data" to mapOf("status" to "not-registered"))
+            }
+            return mapOf("data" to mapOf("status" to "approved"))
+        } catch (e: Exception) {
             return mapOf("data" to mapOf("status" to "not-registered"))
         }
 
-        return mapOf("data" to mapOf("status" to "approved", userInfo to userInfo))
     }
 }

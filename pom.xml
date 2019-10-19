@@ -12,7 +12,7 @@
         the Maven archetype 'camunda-archetype-spring-boot-7.11.1']
     </description>
 
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
 
     <properties>
         <camunda.version>7.11.0</camunda.version>
@@ -196,12 +196,6 @@
             <artifactId>jul-to-slf4j</artifactId>
             <scope>test</scope>
         </dependency>
-
-        <!-- https://mvnrepository.com/artifact/org.springframework.security.oauth/spring-security-oauth2 -->
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework.security.oauth</groupId>-->
-        <!--            <artifactId>spring-security-oauth2</artifactId>-->
-        <!--        </dependency>-->
 
         <dependency>
             <groupId>org.apache.commons</groupId>

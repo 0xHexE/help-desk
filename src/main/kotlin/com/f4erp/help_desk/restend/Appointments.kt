@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.client.HttpClientErrorException
 import java.util.*
 
+
 @RestController
 @RequestMapping("/data/api/v1/appointment")
 class Appointments(
@@ -27,9 +28,15 @@ class Appointments(
     @GetMapping("/get-appointments")
     fun getAppointments(
             @RequestHeader("Authorization") encoding: String
-    ): MutableIterable<AppointmentEntity> {
+    ): Map<String, List<AppointmentEntity>> {
         val user = authenticator.checkIsAuthenticate(encoding) ?: throw HttpClientErrorException(HttpStatus.FORBIDDEN)
-        return this.appointmentsRepository.findAll()
+        val today = Calendar.getInstance()
+        today.set(Calendar.HOUR_OF_DAY, 0)
+        today.set(Calendar.MINUTE, 0)
+        val todayLastTime = Calendar.getInstance()
+        todayLastTime.set(Calendar.HOUR_OF_DAY, 23)
+        todayLastTime.set(Calendar.MINUTE, 59)
+        return mapOf("data" to this.appointmentsRepository.getTodaysAppointments(today, todayLastTime))
     }
 
     @GetMapping("/pending")
