@@ -27,15 +27,12 @@ class AddIntoAppointmentDatabase(
         appointment.doctor = userRepository.findById(p0.getVariable("Assignee") as String).get()
         appointment.clientEntity = userRepository.findById(p0.getVariable("client") as String).get()
         appointment.processId = p0.processInstanceId
-
         if (p0.hasVariable("Department")) {
             appointment.departmentEntity = departmentRepository.findById(p0.getVariable("Department") as Long).get()
         }
-
         if (p0.hasVariable("TreatmentType")) {
             appointment.treatmentTypeEntity = treatmentRepository.findById(p0.getVariable("TreatmentType") as Long).get()
         }
-
         appointmentsRepository.save(appointment)
     }
 }

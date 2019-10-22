@@ -79,25 +79,31 @@ class Appointments(
             @RequestBody body: Map<String, Any>
     ): Map<String, Map<String, String>> {
         val user = authenticator.checkIsAuthenticate(encoding) ?: throw HttpClientErrorException(HttpStatus.FORBIDDEN)
+        val userInfo = userRepository.findById(user.uid).get()
         val data = userDoctorAssignmentRepository.findAll().find { res -> res.client?.uid == (body["client"] as String) }
         val variables = mutableMapOf(
                 "Assignee" to (data?.doctor?.uid),
                 "Date" to Date(body["date"] as Long),
                 "Description" to body["description"] as String,
                 "Issue" to body["issue"] as String,
-                "Time" to 12L,
-                "client" to body["client"] as String,
+                // TODO: FIX THIS THING FROM BODY
+                "Time" to 30L,
                 "ID" to UUID.randomUUID().toString()
         )
+        if (userInfo.userRole == "client") {
+            variables["client"] = user.uid
+            variables["FromUser"] = "client"
+        } else {
+            variables["client"] = body["client"] as String
+            variables["FromUser"] = "doctor"
+        }
 
         if (body["treatment"] != null) {
             variables["TreatmentType"] = body["treatment"] as Long
         }
-
         if (body["department"] != null) {
             variables["Department"] = body["department"] as Long
         }
-
         return mapOf("data" to mapOf("id" to runtimeService.startProcessInstanceByKey("appointment", variables)
                 .processInstanceId))
     }
