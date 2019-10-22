@@ -30,9 +30,9 @@ class DepartmentController(
 
     @GetMapping
     fun getDepartment(
-            @RequestHeader("Authorization") encoding: String
-    ): MutableIterable<DepartmentEntity> {
-        val user = authenticator.checkIsAuthenticate(encoding) ?: throw HttpClientErrorException(HttpStatus.FORBIDDEN)
-        return departmentRepository.findAll()
+//            @RequestHeader("Authorization") encoding: String
+    ): Map<String, MutableIterable<DepartmentEntity>> {
+//        val user = authenticator.checkIsAuthenticate(encoding) ?: throw HttpClientErrorException(HttpStatus.FORBIDDEN)
+        return mapOf("data" to departmentRepository.findAll())
     }
 }

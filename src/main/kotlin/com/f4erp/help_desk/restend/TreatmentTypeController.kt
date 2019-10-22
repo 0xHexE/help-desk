@@ -31,8 +31,8 @@ class TreatmentTypeController(
     @GetMapping
     fun getDepartment(
             @RequestHeader("Authorization") encoding: String
-    ): MutableIterable<TreatmentTypeEntity> {
+    ): Map<String, MutableIterable<TreatmentTypeEntity>> {
         val user = authenticator.checkIsAuthenticate(encoding) ?: throw HttpClientErrorException(HttpStatus.FORBIDDEN)
-        return treatmentRepository.findAll()
+        return mapOf("data" to treatmentRepository.findAll())
     }
 }

@@ -236,6 +236,12 @@
             <artifactId>kotlin-reflect</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.github.jkcclemens</groupId>
+            <artifactId>khttp</artifactId>
+            <version>-SNAPSHOT</version>
+        </dependency>
+
         <!--        <dependency>-->
         <!--            <groupId>com.ageofmobile</groupId>-->
         <!--            <artifactId>spring-firebase-auth</artifactId>-->
@@ -264,6 +270,10 @@
 <!--            <id>firebase-auth</id>-->
 <!--            <url>https://dl.bintray.com/ageofmobile/spring-firebase-auth</url>-->
 <!--        </repository>-->
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
     </repositories>
 
     <build>

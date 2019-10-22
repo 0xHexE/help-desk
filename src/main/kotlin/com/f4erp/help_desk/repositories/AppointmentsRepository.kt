@@ -10,7 +10,7 @@ import java.util.*
 @Repository
 interface AppointmentsRepository : PagingAndSortingRepository<AppointmentEntity, Long> {
     @Query(
-            value = "SELECT id, date, description, process_id, issue, status, time, client_entity_uid, doctor_uid FROM appointment_entity WHERE date >= ?1 AND date <= ?2",
+            value = "SELECT id, date, description, department_entity_id, treatment_type_entity_id, process_id, issue, status, time, client_entity_uid, doctor_uid FROM appointment_entity WHERE date >= ?1 AND date <= ?2",
             countQuery = "SELECT COUNT(*) FROM appointment_entity WHERE date >= ?1 AND date <= ?2",
             nativeQuery = true
     )

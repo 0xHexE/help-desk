@@ -52,12 +52,22 @@ class AdminController(
         val user = com.f4erp.help_desk.entities.UserEntity()
         user.address = body["address"] as String
         user.name = body["name"] as String
-        user.dateOfBirth = Date(body["dateOfBirth"] as Long)
+        if (body["type"] == "client") {
+            user.dateOfBirth = Date(body["dateOfBirth"] as Long)
+        }
+
         user.uid = data.uid
         user.mobileNumber = body["mobile"] as String
         user.email = body["email"] as String
         user.userRole = body["type"] as String
         val newUser = userRepository.save(user)
+
+        if (body["type"] == "client") {
+            val newRelation = UserDoctorAssignment()
+            newRelation.client = newUser
+            newRelation.doctor = userRepository.findById(body["doctor"] as String).get()
+            userDoctorAssignmentRepository.save(newRelation)
+        }
         return mapOf("data" to mapOf("userId" to newUser.uid))
     }
 

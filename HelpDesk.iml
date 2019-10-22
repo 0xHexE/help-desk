@@ -281,5 +281,9 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-beans:5.1.10.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.aspectj:aspectjrt:1.9.4" level="project" />
     <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-reflect:1.2.71" level="project" />
+    <orderEntry type="library" name="Maven: com.github.jkcclemens:khttp:-0.1.0-g130b89c-16" level="project" />
+    <orderEntry type="library" name="Maven: org.json:json:20150729" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.jetbrains.spek:spek-api:1.1.0" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains.spek:spek-junit-platform-engine:1.1.0" level="project" />
   </component>
 </module>

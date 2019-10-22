@@ -103,11 +103,6 @@
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="SequenceFlow_0k9p294" sourceRef="IntermediateThrowEvent_08koyuz" targetRef="Task_0hti0kr" />
     <bpmn:serviceTask id="Task_0hti0kr" name="Notify users for appointment" camunda:class="com.f4erp.help_desk.tasks.NotifyUserForAppointment">
-      <bpmn:extensionElements>
-        <camunda:field name="type">
-          <camunda:string>appointment_done</camunda:string>
-        </camunda:field>
-      </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_0k9p294</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1hct800</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -204,6 +199,11 @@
     </bpmn:userTask>
     <bpmn:serviceTask id="Task_047qo9j" name="Notify the users"
                       camunda:class="com.f4erp.help_desk.tasks.NotifyUserForAppointment">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="type">notifyForConfirm</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_0hiolb2</bpmn:incoming>
       <bpmn:incoming>SequenceFlow_1xwn8wd</bpmn:incoming>
       <bpmn:incoming>SequenceFlow_0g2r6kf</bpmn:incoming>

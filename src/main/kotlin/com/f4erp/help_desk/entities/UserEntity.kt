@@ -28,6 +28,6 @@ class UserEntity {
     @Column(nullable = false)
     var address: String? = null
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     var dateOfBirth: Date? = null
 }

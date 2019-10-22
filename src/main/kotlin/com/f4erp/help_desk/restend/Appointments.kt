@@ -40,10 +40,10 @@ class Appointments(
         print(param)
         val user = authenticator.checkIsAuthenticate(encoding) ?: throw HttpClientErrorException(HttpStatus.FORBIDDEN)
         val data = userRepository.findById(user.uid).get()
-        return if (data.userRole == "doctor") {
-            mapOf("data" to this.appointmentsRepository.getAppointmentsInRange(Date(param["from"]?.toLong()!!), Date(param["to"]?.split("?")!![0].toLong())).filter { it.doctor?.uid === data.uid })
-        } else {
-            mapOf("data" to this.appointmentsRepository.getAppointmentsInRange(Date(param["from"]?.toLong()!!), Date(param["to"]?.split("?")!![0].toLong())))
+        return when {
+            data.userRole == "doctor" -> mapOf("data" to this.appointmentsRepository.getAppointmentsInRange(Date(param["from"]?.toLong()!!), Date(param["to"]?.split("?")!![0].toLong())).filter { it.doctor?.uid === data.uid })
+            data.userRole == "client" -> mapOf("data" to this.appointmentsRepository.getAppointmentsInRange(Date(param["from"]?.toLong()!!), Date(param["to"]?.split("?")!![0].toLong())).filter { it.clientEntity?.uid === data.uid })
+            else -> mapOf("data" to this.appointmentsRepository.getAppointmentsInRange(Date(param["from"]?.toLong()!!), Date(param["to"]?.split("?")!![0].toLong())))
         }
     }
 
@@ -80,29 +80,30 @@ class Appointments(
     ): Map<String, Map<String, String>> {
         val user = authenticator.checkIsAuthenticate(encoding) ?: throw HttpClientErrorException(HttpStatus.FORBIDDEN)
         val userInfo = userRepository.findById(user.uid).get()
-        val data = userDoctorAssignmentRepository.findAll().find { res -> res.client?.uid == (body["client"] as String) }
         val variables = mutableMapOf(
-                "Assignee" to (data?.doctor?.uid),
                 "Date" to Date(body["date"] as Long),
                 "Description" to body["description"] as String,
                 "Issue" to body["issue"] as String,
-                // TODO: FIX THIS THING FROM BODY
-                "Time" to 30L,
+                "Time" to (body["time"] as Int).toLong(),
                 "ID" to UUID.randomUUID().toString()
         )
         if (userInfo.userRole == "client") {
             variables["client"] = user.uid
             variables["FromUser"] = "client"
+            variables["Assignee"] = userDoctorAssignmentRepository.findAll().find { res -> res.client?.uid == user.uid }?.client?.uid as String
         } else {
+            val client = userDoctorAssignmentRepository.findAll().find { res -> res.client?.uid == body["client"] as String }
             variables["client"] = body["client"] as String
+            variables["Assignee"] = client?.doctor?.uid as String
             variables["FromUser"] = "doctor"
         }
 
         if (body["treatment"] != null) {
-            variables["TreatmentType"] = body["treatment"] as Long
+            val treatment = body["treatment"] as Int
+            variables["TreatmentType"] = treatment.toLong()
         }
         if (body["department"] != null) {
-            variables["Department"] = body["department"] as Long
+            variables["Department"] = (body["department"] as Int).toLong()
         }
         return mapOf("data" to mapOf("id" to runtimeService.startProcessInstanceByKey("appointment", variables)
                 .processInstanceId))
@@ -120,14 +121,17 @@ class Appointments(
         return mapOf("data" to returnValue)
     }
 
-    @PostMapping("/task/complete/client-approve/{id}")
+    @PostMapping("/task/complete/availability/{id}")
     fun completeAction(@PathVariable id: String, @RequestBody body: Map<String, Any>): Map<String, Map<String, Boolean>> {
         val result = taskService.createTaskQuery()
                 .processInstanceId(id)
                 .singleResult()
-
-        formService.submitTaskForm(result.id, mapOf("IsClientAvailable" to body["isClientAvailable"], "ThenWhichDate" to "", "Note" to ""))
-
+        val ok = mapOf(
+                "IsOk" to body["isOk"] as Boolean,
+                "Note" to body["note"] as String,
+                "Date" to Date(body["date"] as Long)
+        )
+        formService.submitTaskForm(result.id, ok)
         return mapOf("data" to mapOf("success" to true))
     }
 
