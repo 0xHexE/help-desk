@@ -7,6 +7,5 @@ import org.springframework.stereotype.Component
 @Component("updateDatabase")
 class UpdateDatabase : JavaDelegate {
     override fun execute(p0: DelegateExecution?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

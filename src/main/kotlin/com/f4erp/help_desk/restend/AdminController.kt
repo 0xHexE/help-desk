@@ -1,6 +1,7 @@
 package com.f4erp.help_desk.restend
 
 import com.f4erp.help_desk.entities.UserDoctorAssignment
+import com.f4erp.help_desk.repositories.AppointmentsRepository
 import com.f4erp.help_desk.repositories.UserDoctorAssignmentRepository
 import com.f4erp.help_desk.repositories.UserRepository
 import com.f4erp.help_desk.utils.validators.Authenticator
@@ -26,6 +27,7 @@ class AdminController(
         @field:Autowired private val formService: FormService,
         @field:Autowired private val taskService: TaskService,
         @field:Autowired private val processEngine: RuntimeService,
+        @field:Autowired private val appointmentRepository: AppointmentsRepository,
         @field:Autowired private val userDoctorAssignmentRepository: UserDoctorAssignmentRepository
 ) {
     private val authenticator: Authenticator = Authenticator(this.firebaseAuth)
@@ -57,6 +59,31 @@ class AdminController(
         user.userRole = body["type"] as String
         val newUser = userRepository.save(user)
         return mapOf("data" to mapOf("userId" to newUser.uid))
+    }
+
+    @GetMapping("/user-info/{id}")
+    fun userInfo(
+            @RequestHeader("Authorization") encoding: String,
+            @PathVariable id: String
+    ): Map<String, Map<String, Any>> {
+        authenticator.checkIsAuthenticate(encoding) ?: throw HttpClientErrorException(HttpStatus.FORBIDDEN)
+
+        val data = userRepository.findById(id).get()
+
+        if (data.userRole != "client") {
+            return mapOf(
+                    "data" to mapOf(
+                            "user" to data
+                    )
+            )
+        }
+
+        return mapOf(
+                "data" to mapOf(
+                        "user" to data,
+                        "appointments" to appointmentRepository.getAppointmentByClientEntity(data)
+                )
+        )
     }
 
     @PatchMapping("/associate-doctor/:client/:doctor")

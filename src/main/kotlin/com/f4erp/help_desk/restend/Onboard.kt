@@ -65,7 +65,7 @@ class Onboard(
             if (userInfo.get() == null) {
                 return mapOf("data" to mapOf("status" to "not-registered"))
             }
-            return mapOf("data" to mapOf("status" to "approved"))
+            return mapOf("data" to mapOf("status" to "approved", "role" to userInfo.get().userRole, "userId" to userInfo.get().uid))
         } catch (e: Exception) {
             return mapOf("data" to mapOf("status" to "not-registered"))
         }

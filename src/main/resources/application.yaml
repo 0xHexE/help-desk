@@ -8,6 +8,16 @@ camunda.bpm:
   filter:
     create: All Tasks
 
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
+
 #plugin.identity.keycloak:
 #  keycloakIssuerUrl: https://id.f4erp.com/auth/realms/dev
 #  keycloakAdminUrl: https://id.f4erp.com/auth/admin/realms/dev

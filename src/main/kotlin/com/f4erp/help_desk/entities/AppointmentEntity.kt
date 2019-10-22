@@ -23,5 +23,11 @@ class AppointmentEntity {
     @Column
     var time: Long? = null
     @Column
-    val status: String? = null
+    var processId: String? = null
+    @JoinColumn(nullable = true)
+    @ManyToOne
+    var treatmentTypeEntity: TreatmentTypeEntity? = null
+    @JoinColumn(nullable = true)
+    @ManyToOne
+    var departmentEntity: DepartmentEntity? = null
 }
